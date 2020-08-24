@@ -7,29 +7,14 @@
  */
 
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import StackNav from './src/Navigation';
 
 const App = () => {
   return (
     <>
-      <View style={styles.container}>
-        <Text style={styles.text}>Video List</Text>
-      </View>
+      <StackNav />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  text: {
-    color: '#008000',
-    fontWeight: '700',
-    fontSize: 30,
-  },
-});
 
 export default App;
