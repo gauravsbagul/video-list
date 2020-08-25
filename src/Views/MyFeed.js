@@ -3,22 +3,32 @@
 
 import { View, Text } from 'native-base';
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+} from 'react-native';
 import Header from './components/Header';
 import VideoCard from './components/VideoCard';
 import { connect } from 'react-redux';
 import { getVideos } from '../Redux/actions/videoList';
+import ImagePicker from 'react-native-image-picker';
 
 const MyFeed = ({ navigation, getVideos, videos }) => {
   const [videoList, setVideoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [avatar, setAvatar] = useState(
+    'https://randomuser.me/api/portraits/lego/5.jpg',
+  );
 
   useEffect(() => {
     getVideosFromAPI();
   }, []);
 
   useEffect(() => {
-    console.log('MyFeed -> props.videos', videos);
     if (
       !videos?.getAllVideos?.error &&
       videos?.getAllVideos?.response?.videos
@@ -31,15 +41,49 @@ const MyFeed = ({ navigation, getVideos, videos }) => {
   const getVideosFromAPI = async () => {
     getVideos();
   };
-  console.log('videoList', videoList);
+
+  const selectAvatar = async () => {
+    console.log('selectAvatar -> selectAvatar');
+
+    const options = {
+      title: 'Select Avatar',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+      mediaType: 'images',
+      videoQuality: 'medium',
+    };
+    await ImagePicker.showImagePicker(options, (results) => {
+      if (results.didCancel) {
+      } else if (results.error) {
+        Alert.alert('', results.error, [{ text: 'Ok' }]);
+      } else {
+        setAvatar(results.uri);
+      }
+    });
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    getVideosFromAPI();
+    setRefreshing(false);
+  };
+
   return (
     <>
-      <Header />
+      <Header avatar={avatar} selectAvatar={selectAvatar} />
       <View style={styles.container}>
         {isLoading ? (
           <ActivityIndicator />
         ) : (
           <FlatList
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => onRefresh()}
+              />
+            }
             data={videoList}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (

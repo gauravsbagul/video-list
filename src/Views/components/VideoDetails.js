@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 import { Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default VideoDetails = ({ item, index }) => {
   return (
@@ -13,7 +14,12 @@ export default VideoDetails = ({ item, index }) => {
           {item.thumbnail_url.split('images/')[1].split('.')[0]}
         </Text>
       </View>
-      <Text style={styles.description}>2hr ago</Text>
+      <View>
+        <Text style={styles.description}>2hr ago</Text>
+        <TouchableOpacity style={styles.shareIcon}>
+          <FontAwesome5 name={'share-alt'} size={20} color={'#999'} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -39,5 +45,8 @@ const styles = StyleSheet.create({
   description: {
     color: '#aaa',
     fontSize: 15,
+  },
+  shareIcon: {
+    padding: 20,
   },
 });

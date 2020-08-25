@@ -1,11 +1,10 @@
 // In App.js in a new project
 
-import { Col, Row, Text, View } from 'native-base';
-import React, { useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Col, Row, Text } from 'native-base';
+import React from 'react';
+import { Image, Pressable, StyleSheet } from 'react-native';
 
-const Header = ({ imageUri }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const Header = ({ avatar, selectAvatar }) => {
   return (
     <Row style={styles.header}>
       <Col>
@@ -14,14 +13,9 @@ const Header = ({ imageUri }) => {
         </Text>
         <Text style={styles.myFeed}>My Feed</Text>
       </Col>
-      <View style={styles.avatarWrapper}>
-        <Image
-          style={styles.avatar}
-          source={{
-            uri: 'https://randomuser.me/api/portraits/lego/5.jpg',
-          }}
-        />
-      </View>
+      <Pressable style={styles.avatarWrapper} onPress={() => selectAvatar()}>
+        <Image style={styles.avatar} source={{ uri: avatar }} />
+      </Pressable>
     </Row>
   );
 };

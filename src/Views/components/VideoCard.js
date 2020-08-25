@@ -1,12 +1,7 @@
 /* eslint-disable no-undef */
 import { Card, Text, View } from 'native-base';
 import React, { useState } from 'react';
-import {
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import VideoPlayer from './VideoPlayer';
 import VideoDetails from './VideoDetails';
