@@ -4,7 +4,6 @@
 import { View, Text } from 'native-base';
 import React, { useState, useEffect } from 'react';
 import Share from 'react-native-share';
-
 import {
   FlatList,
   StyleSheet,
@@ -20,7 +19,7 @@ import { getVideos } from '../Redux/actions/videoList';
 import Header from './components/Header';
 import VideoCard from './components/VideoCard';
 import { logout } from './../Redux/actions/auth';
-
+import EmptyData from './components/EmptyData';
 const MyFeed = (props) => {
   const { navigation, getVideos, videos } = props;
   const [videoList, setVideoList] = useState([]);
@@ -164,6 +163,7 @@ const MyFeed = (props) => {
 
   const onRefresh = () => {
     setRefreshing(true);
+    setVideoList([]);
     getVideosFromAPI();
     setRefreshing(false);
   };
@@ -182,7 +182,7 @@ const MyFeed = (props) => {
                 onRefresh={() => onRefresh()}
               />
             }
-            data={videoList}
+            data={[...videoList]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
               <VideoCard
@@ -193,11 +193,7 @@ const MyFeed = (props) => {
             )}
             ListFooterComponent={<View style={{ height: 150 }} />}
             onEndReached={() => getVideosFromAPI()}
-            ListEmptyComponent={
-              <View>
-                <Text>Empty</Text>
-              </View>
-            }
+            ListEmptyComponent={<EmptyData />}
           />
         )}
       </View>
@@ -209,6 +205,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     backgroundColor: '#eee',
+    flex: 1,
     paddingHorizontal: 20,
   },
 });

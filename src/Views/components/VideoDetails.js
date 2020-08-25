@@ -6,7 +6,6 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default VideoDetails = ({ item, index, shareImageUrl }) => {
-  console.log('TCL:: defaultVideoDetails -> item', item);
   return (
     <View style={styles.videoDetails}>
       <View>

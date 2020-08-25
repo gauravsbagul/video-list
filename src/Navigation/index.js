@@ -9,6 +9,7 @@ import ColorStrip from '../Views/ColorStrip';
 import MyFeed from '../Views/MyFeed';
 import Splash from '../Views/Auth/Splash';
 import Login from '../Views/Auth/Login';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,8 +20,24 @@ const screenOptions = {
 const TabNav = (props) => {
   return (
     <Tab.Navigator
-    // tabBarOptions
-    >
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'MyFeed') {
+            iconName = focused ? 'heart' : 'heart-o';
+            return <FontAwesome name={iconName} size={size} color={'red'} />;
+          } else if (route.name === 'ColorStrip') {
+            iconName = focused ? 'star' : 'star-o';
+            console.log('TCL:: TabNav -> iconName', iconName);
+            return <FontAwesome name={iconName} size={size} color={color} />;
+          }
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      }}>
       <Tab.Screen name="MyFeed" component={MyFeed} />
       <Tab.Screen name="ColorStrip" component={ColorStrip} />
     </Tab.Navigator>
