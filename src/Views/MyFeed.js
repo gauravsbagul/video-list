@@ -49,7 +49,15 @@ const MyFeed = (props) => {
       videos?.getAllVideos?.response?.videos
     ) {
       setIsLoading(false);
-      setVideoList(videos?.getAllVideos?.response?.videos);
+      let videosArray = [
+        ...videoList,
+        ...videos?.getAllVideos?.response?.videos,
+      ];
+      if (videoList.length) {
+        setVideoList(videosArray);
+      } else {
+        setVideoList(videos?.getAllVideos?.response?.videos);
+      }
     }
   }, [videos]);
 
@@ -97,8 +105,7 @@ const MyFeed = (props) => {
   };
 
   const shareImageUrl = (item) => {
-    console.log('TCL:: shareImageUrl -> item', item);
-    const options = Platform.select({
+    let options = Platform.select({
       ios: {
         activityItemSources: [
           {
@@ -151,12 +158,8 @@ const MyFeed = (props) => {
       },
     });
     Share.open(options)
-      .then((res) => {
-        console.log('TCL:: shareImageUrl -> res', res);
-      })
-      .catch((err) => {
-        console.log('TCL:: shareImageUrl -> err', err);
-      });
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   const onRefresh = () => {
@@ -188,6 +191,8 @@ const MyFeed = (props) => {
                 shareImageUrl={shareImageUrl}
               />
             )}
+            ListFooterComponent={<View style={{ height: 150 }} />}
+            onEndReached={() => getVideosFromAPI()}
             ListEmptyComponent={
               <View>
                 <Text>Empty</Text>

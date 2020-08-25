@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   avatarWrapper: {
     height: 50,
     width: 50,
-    backgroundColor: 'red',
+    backgroundColor: '#aaa',
     marginRight: 20,
     borderRadius: 25,
   },

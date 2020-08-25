@@ -6,13 +6,14 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default VideoDetails = ({ item, index, shareImageUrl }) => {
+  console.log('TCL:: defaultVideoDetails -> item', item);
   return (
     <View style={styles.videoDetails}>
       <View>
         <Text style={styles.new}>New</Text>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>
-          {item.thumbnail_url.split('images/')[1].split('.')[0]}
+          {item.thumbnail_url?.split('images/')[1].split('.')[0]}
         </Text>
       </View>
       <View>
