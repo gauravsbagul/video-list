@@ -1,4 +1,6 @@
 export const ACTION_TYPE = {
   LOGIN: 'LOGIN',
   GET_VIDEOS: 'GET_VIDEOS',
+  IS_LOGIN: 'IS_LOGIN',
+  LOGOUT: 'LOGOUT',
 };

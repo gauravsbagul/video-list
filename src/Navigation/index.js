@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { connect } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -15,12 +16,11 @@ const screenOptions = {
   headerShown: false,
 };
 
-const TabNav = () => {
+const TabNav = (props) => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        ...screenOptions,
-      }}>
+    // tabBarOptions
+    >
       <Tab.Screen name="MyFeed" component={MyFeed} />
       <Tab.Screen name="ColorStrip" component={ColorStrip} />
     </Tab.Navigator>
@@ -29,7 +29,9 @@ const TabNav = () => {
 
 const AuthStack = createStackNavigator();
 
-function StackNav() {
+const StackNav = (props) => {
+  const isLoggedIn = props.authentication?.userLoggedOut;
+
   return (
     <NavigationContainer>
       <AuthStack.Navigator
@@ -37,11 +39,17 @@ function StackNav() {
           ...screenOptions,
         }}>
         <AuthStack.Screen name="Splash" component={Splash} />
-        <AuthStack.Screen name="Login" component={Login} />
-        <AuthStack.Screen name="TabNav" component={TabNav} />
+        {isLoggedIn ? (
+          <AuthStack.Screen name="Login" component={Login} />
+        ) : (
+          <AuthStack.Screen name="TabNav" component={TabNav} />
+        )}
       </AuthStack.Navigator>
     </NavigationContainer>
   );
-}
+};
+const mapStateToProps = ({ authentication }) => {
+  return { authentication };
+};
 
-export default StackNav;
+export default connect(mapStateToProps)(StackNav);

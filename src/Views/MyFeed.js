@@ -9,20 +9,32 @@ import {
   ActivityIndicator,
   Alert,
   RefreshControl,
+  BackHandler,
 } from 'react-native';
-import Header from './components/Header';
-import VideoCard from './components/VideoCard';
+import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
 import { getVideos } from '../Redux/actions/videoList';
-import ImagePicker from 'react-native-image-picker';
+import Header from './components/Header';
+import VideoCard from './components/VideoCard';
+import { logout } from './../Redux/actions/auth';
 
-const MyFeed = ({ navigation, getVideos, videos }) => {
+const MyFeed = (props) => {
+  const { navigation, getVideos, videos } = props;
   const [videoList, setVideoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [avatar, setAvatar] = useState(
     'https://randomuser.me/api/portraits/lego/5.jpg',
   );
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
     getVideosFromAPI();
@@ -38,21 +50,38 @@ const MyFeed = ({ navigation, getVideos, videos }) => {
     }
   }, [videos]);
 
+  const backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to logout?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'YES',
+        onPress: () => logMeOut(),
+        style: 'destructive',
+      },
+    ]);
+    return true;
+  };
+
+  const logMeOut = () => {
+    props.logout();
+    BackHandler.exitApp();
+  };
+
   const getVideosFromAPI = async () => {
     getVideos();
   };
 
   const selectAvatar = async () => {
-    console.log('selectAvatar -> selectAvatar');
-
     const options = {
       title: 'Select Avatar',
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
-      mediaType: 'images',
-      videoQuality: 'medium',
     };
     await ImagePicker.showImagePicker(options, (results) => {
       if (results.didCancel) {
@@ -116,6 +145,7 @@ const mapStateToProps = ({ videos }) => {
 };
 const mapDispatchToProps = {
   getVideos,
+  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyFeed);
