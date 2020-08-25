@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 const Splash = ({ navigation }) => {
   useEffect(() => {
@@ -12,9 +12,7 @@ const Splash = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Text>SplashScreen...</Text>
-      </Pressable>
+      <ActivityIndicator size="large" color="#000" animating />
     </View>
   );
 };
