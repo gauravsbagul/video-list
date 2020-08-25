@@ -3,6 +3,8 @@
 
 import { View, Text } from 'native-base';
 import React, { useState, useEffect } from 'react';
+import Share from 'react-native-share';
+
 import {
   FlatList,
   StyleSheet,
@@ -10,6 +12,7 @@ import {
   Alert,
   RefreshControl,
   BackHandler,
+  Platform,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
@@ -93,6 +96,69 @@ const MyFeed = (props) => {
     });
   };
 
+  const shareImageUrl = (item) => {
+    console.log('TCL:: shareImageUrl -> item', item);
+    const options = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            // For sharing url with custom title.
+            placeholderItem: { type: 'url', content: item.video_url },
+            item: {
+              default: { type: 'url', content: item.video_url },
+            },
+            subject: {
+              default: item.video_title,
+            },
+            linkMetadata: {
+              originalUrl: item.video_url,
+              url: item.video_url,
+              title: item.video_title,
+            },
+          },
+          {
+            // For sharing text.
+            placeholderItem: {
+              type: 'text',
+              content: 'checkout this awesome video',
+            },
+            item: {
+              default: { type: 'text', content: 'checkout this awesome video' },
+              message: null, // Specify no text to share via Messages app.
+            },
+            linkMetadata: {
+              // For showing app icon on share preview.
+              title: 'checkout this awesome video',
+            },
+          },
+          {
+            // For using custom icon instead of default text icon at share preview when sharing with message.
+            placeholderItem: {
+              type: 'url',
+            },
+            item: {
+              default: {
+                type: 'text',
+                content: item.video_url,
+              },
+            },
+          },
+        ],
+      },
+      default: {
+        title: item.video_url,
+        message: item.video_url,
+      },
+    });
+    Share.open(options)
+      .then((res) => {
+        console.log('TCL:: shareImageUrl -> res', res);
+      })
+      .catch((err) => {
+        console.log('TCL:: shareImageUrl -> err', err);
+      });
+  };
+
   const onRefresh = () => {
     setRefreshing(true);
     getVideosFromAPI();
@@ -116,7 +182,11 @@ const MyFeed = (props) => {
             data={videoList}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-              <VideoCard item={item} index={index} />
+              <VideoCard
+                item={item}
+                index={index}
+                shareImageUrl={shareImageUrl}
+              />
             )}
             ListEmptyComponent={
               <View>

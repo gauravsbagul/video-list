@@ -25,9 +25,12 @@ export const isLoggedIn = () => {
   return async (dispatch) => {
     try {
       const response = await AsyncStorage.getItem('loginDetails');
+
       dispatch({
         type: ACTION_TYPE.IS_LOGIN,
-        payload: { response: 'Logged in', error: false },
+        payload: response
+          ? { response: 'Logged in', error: false }
+          : { response: 'Logged Out', error: true },
       });
     } catch (error) {
       dispatch({

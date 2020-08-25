@@ -14,6 +14,10 @@ target 'videos_list' do
 
   pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
   target 'videos_listTests' do
     inherit! :complete
     # Pods for testing

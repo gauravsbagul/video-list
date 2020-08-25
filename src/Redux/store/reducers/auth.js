@@ -1,9 +1,7 @@
 /* eslint-disable no-unreachable */
 import { ACTION_TYPE } from '../../actions/constants';
 
-const initialState = {
-  userLoggedOut: false,
-};
+const initialState = {};
 
 export default (state = initialState, action) => {
   const newState = { ...state };

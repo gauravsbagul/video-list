@@ -1,10 +1,11 @@
+// @ts-nocheck
 /* eslint-disable no-undef */
 import { Text, View } from 'native-base';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default VideoDetails = ({ item, index }) => {
+export default VideoDetails = ({ item, index, shareImageUrl }) => {
   return (
     <View style={styles.videoDetails}>
       <View>
@@ -16,7 +17,9 @@ export default VideoDetails = ({ item, index }) => {
       </View>
       <View>
         <Text style={styles.description}>2hr ago</Text>
-        <TouchableOpacity style={styles.shareIcon}>
+        <TouchableOpacity
+          style={styles.shareIcon}
+          onPress={() => shareImageUrl(item)}>
           <FontAwesome5 name={'share-alt'} size={20} color={'#999'} />
         </TouchableOpacity>
       </View>

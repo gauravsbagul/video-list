@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable no-undef */
 import { Card, Text, View } from 'native-base';
 import React, { useState } from 'react';
@@ -5,7 +6,7 @@ import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import VideoPlayer from './VideoPlayer';
 import VideoDetails from './VideoDetails';
-export default VideoCard = ({ item, index }) => {
+export default VideoCard = ({ item, index, shareImageUrl }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
@@ -28,7 +29,7 @@ export default VideoCard = ({ item, index }) => {
               bufferForPlaybackAfterRebufferMs: 5000,
             }}
           />
-          <VideoDetails item={item} />
+          <VideoDetails item={item} shareImageUrl={shareImageUrl} />
         </>
       ) : (
         <ImageBackground
@@ -41,7 +42,7 @@ export default VideoCard = ({ item, index }) => {
             onPress={() => setIsPlaying(true)}>
             <FontAwesome name={'play'} size={15} color={'#fff'} />
           </TouchableOpacity>
-          <VideoDetails item={item} />
+          <VideoDetails item={item} shareImageUrl={shareImageUrl} />
         </ImageBackground>
       )}
     </Card>
