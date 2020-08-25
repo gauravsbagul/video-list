@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import ColorStrip from '../Views/ColorStrip';
-import Home from '../Views/Home';
+import MyFeed from '../Views/MyFeed';
 import Splash from '../Views/Auth/Splash';
 import Login from '../Views/Auth/Login';
 
@@ -21,8 +21,8 @@ const TabNav = () => {
       screenOptions={{
         ...screenOptions,
       }}>
+      <Tab.Screen name="MyFeed" component={MyFeed} />
       <Tab.Screen name="ColorStrip" component={ColorStrip} />
-      <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );
 };

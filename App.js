@@ -6,13 +6,18 @@
  * @flow strict-local
  */
 
+import { StyleProvider } from 'native-base';
 import React from 'react';
-import StackNav from './src/Navigation';
+import getTheme from './native-base-theme/components';
+import material from './native-base-theme/variables/material';
+import Root from './src/Navigation';
 
 const App = () => {
   return (
     <>
-      <StackNav />
+      <StyleProvider style={getTheme(material)}>
+        <Root />
+      </StyleProvider>
     </>
   );
 };
