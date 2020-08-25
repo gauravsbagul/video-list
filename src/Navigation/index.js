@@ -36,9 +36,9 @@ function StackNav() {
         screenOptions={{
           ...screenOptions,
         }}>
+        <AuthStack.Screen name="TabNav" component={TabNav} />
         <AuthStack.Screen name="Splash" component={Splash} />
         <AuthStack.Screen name="Login" component={Login} />
-        <AuthStack.Screen name="TabNav" component={TabNav} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

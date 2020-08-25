@@ -1,10 +1,11 @@
 // In App.js in a new project
 
 import { Col, Row, Text, View } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
 const Header = ({ imageUri }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <Row style={styles.header}>
       <Col>

@@ -12,6 +12,8 @@ target 'videos_list' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
+
   target 'videos_listTests' do
     inherit! :complete
     # Pods for testing
