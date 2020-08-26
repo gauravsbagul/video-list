@@ -44,6 +44,8 @@ const MyFeed = (props) => {
 
   useEffect(() => {
     if (
+      !videoList.length &&
+      props.navigation.isFocused() &&
       !videos?.getAllVideos?.error &&
       videos?.getAllVideos?.response?.videos
     ) {
@@ -56,6 +58,18 @@ const MyFeed = (props) => {
         setVideoList(videosArray);
       } else {
         setVideoList(videos?.getAllVideos?.response?.videos);
+      }
+    } else {
+      if (videos?.getAllVideos?.error && videos?.getAllVideos?.response) {
+        setIsLoading(false);
+        Alert.alert('', ' Something went wrong!', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              getVideosFromAPI();
+            },
+          },
+        ]);
       }
     }
   }, [videos]);
