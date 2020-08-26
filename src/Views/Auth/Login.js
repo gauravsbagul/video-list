@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+    height: 50,
     backgroundColor: '#5499C7',
     marginTop: 30,
     alignContent: 'center',
     justifyContent: 'center',
-    flex: 1,
   },
 });
