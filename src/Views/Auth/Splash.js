@@ -11,18 +11,12 @@ const Splash = (props) => {
   useEffect(() => {
     setTimeout(() => {
       props.isLoggedIn();
-    }, 3000);
+    }, 2000);
   }, []);
 
   useEffect(() => {
-    console.log('Splash -> props', props);
-    console.log(
-      "Splash -> props.authentication.hasOwnProperty('isLogin')",
-      props.authentication.hasOwnProperty('isLogin'),
-    );
     if (props.navigation.isFocused()) {
       if (props.authentication.hasOwnProperty('isLogin')) {
-        console.log('Splash -> props.authentication', props.authentication);
         if (
           props.authentication.isLogin?.error &&
           props.authentication.isLogin?.response === 'Logged Out'

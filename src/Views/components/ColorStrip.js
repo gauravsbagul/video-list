@@ -20,8 +20,8 @@ const ColorStrip = (props) => {
       <View
         style={[
           {
-            borderTopWidth: index == 0 && 1,
-            borderBottomWidth: index == colorListLength - 1 && 1,
+            borderTopWidth: index == 0 ? 1 : 0,
+            borderBottomWidth: index == colorListLength - 1 ? 1 : 0,
           },
           styles.leftColorStripWrapper,
         ]}>
