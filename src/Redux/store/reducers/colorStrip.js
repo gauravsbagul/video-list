@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case ACTION_TYPE.SET_COLORS:
       return {
         ...state,
-        setColors: action.payload,
+        getAllColors: action.payload,
       };
     default:
       return state;

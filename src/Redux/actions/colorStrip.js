@@ -29,25 +29,24 @@ export const getColors = () => {
   };
 };
 
-export const setColors = (cstripIndex, colorBoxIndex, colorValue) => {
-  return async (dispatch) => {
+export const setColors = (colorStripIndex, colorBoxIndex, colorValue) => {
+  return async (dispatch, getState) => {
     try {
-      const body = {
-        method: 'GET',
-        url: API,
-      };
+      const { getAllColors } = getState().colors;
 
-      const response = await axios(body);
+      getAllColors.response[colorStripIndex].inputBoxValue = colorValue.value;
+      const response = await getAllColors;
       console.log('setColors -> response', response);
 
       dispatch({
         type: ACTION_TYPE.SET_COLORS,
-        payload: { response: response.data, error: false },
+        payload: { response: response.response, error: false },
       });
     } catch (error) {
+      console.log('setColors -> error', error);
       dispatch({
         type: ACTION_TYPE.SET_COLORS,
-        payload: { response: error.response, error: true },
+        payload: { response: 'Something went wrong!', error: true },
       });
     }
   };

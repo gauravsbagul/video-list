@@ -20,17 +20,14 @@ const ColorStrip = (props) => {
   const [colorList, setColorList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectShade, setelectedShade] = useState(null);
-  const [selectColorBoxItem, setSelectedColorBoxItem] = useState(null);
-  const [inputBoxValue, setInputBoxValue] = useState(null);
-  const [error, setError] = useState('');
+  const [selectedColorIndex, setSelectedColorIndex] = useState(null);
+  const [selectShadeIndex, setelectedShadeIndex] = useState(null);
+  const [error] = useState('');
 
   const onPressColorBox = (i, index, it) => {
-    setSelectedColor(i);
-    setelectedShade(index);
-    setSelectedColorBoxItem(it);
-    setInputBoxValue(it.value);
+    setelectedShadeIndex(index);
+    setSelectedColorIndex(i);
+    props.setColors(index, i, it);
   };
 
   useEffect(() => {
@@ -38,7 +35,8 @@ const ColorStrip = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props.navigation.isFocused() && !colorList.length) {
+    console.log('ColorStrip -> props', props);
+    if (props.navigation.isFocused()) {
       if (props.colors?.hasOwnProperty('getAllColors')) {
         if (
           !props.colors?.getAllColors?.error &&
@@ -86,10 +84,7 @@ const ColorStrip = (props) => {
                     <Text style={styles.unit}>{`(${item.unit})`}</Text>
                   </Text>
                   <View style={styles.valueBox}>
-                    <Input
-                      style={styles.input}
-                      value={setelectedShade == index ? inputBoxValue : null}
-                    />
+                    <Input style={styles.input} value={item.inputBoxValue} />
                   </View>
                 </View>
                 <FlatList
@@ -107,7 +102,8 @@ const ColorStrip = (props) => {
                           styles.selelctedBox,
                           {
                             borderColor:
-                              i == selectedColor && selectShade == index
+                              i == selectedColorIndex &&
+                              selectShadeIndex == index
                                 ? 'green'
                                 : '#0000',
                           },
