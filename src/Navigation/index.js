@@ -26,7 +26,7 @@ const TabNav = (props) => {
 
           if (route.name === 'MyFeed') {
             iconName = focused ? 'heart' : 'heart-o';
-            return <FontAwesome name={iconName} size={size} color={'red'} />;
+            return <FontAwesome name={iconName} size={size} color={color} />;
           } else if (route.name === 'ColorStrip') {
             iconName = focused ? 'star' : 'star-o';
             return <FontAwesome name={iconName} size={size} color={color} />;

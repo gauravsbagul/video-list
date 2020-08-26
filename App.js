@@ -35,5 +35,4 @@ const App = (props) => {
     </Provider>
   );
 };
-console.reportErrorsAsExceptions = false;
 export default App;
