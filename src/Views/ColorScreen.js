@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { getColors, setColors } from '../Redux/actions/colorStrip';
 import ColorStrip from './components/ColorStrip';
 import CustomAlert from './components/CustomAlert';
+import * as helper from '../Helpers';
 
 const ColorScreen = (props) => {
   const [colorList, setColorList] = useState([]);
@@ -95,22 +96,20 @@ const ColorScreen = (props) => {
       </View>
       <Container style={styles.bodyContainer}>
         <Text style={styles.testStrip}>Test Strip</Text>
-        {isLoading && !error ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            data={[...colorList]}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => (
-              <ColorStrip
-                index={index}
-                item={item}
-                onPressColorBox={onPressColorBox}
-                colorListLength={colorList.length}
-              />
-            )}
-          />
-        )}
+
+        <FlatList
+          data={[...colorList]}
+          ListEmptyComponent={<ActivityIndicator />}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <ColorStrip
+              index={index}
+              item={item}
+              onPressColorBox={onPressColorBox}
+              colorListLength={colorList.length}
+            />
+          )}
+        />
       </Container>
     </View>
   );
@@ -119,7 +118,7 @@ const ColorScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: helper.isSmallDevice(20, 0),
     backgroundColor: '#fff',
   },
   header: {
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    height: 100,
+    height: helper.isSmallDevice(60, 60),
   },
   nextWrapper: {
     backgroundColor: '#999',
@@ -140,6 +139,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bodyContainer: {
+    marginTop: helper.isSmallDevice(-10, 0),
     paddingHorizontal: 20,
   },
   testStrip: {

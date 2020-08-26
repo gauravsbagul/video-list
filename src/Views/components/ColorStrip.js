@@ -6,6 +6,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ColorBox from './ColorBox';
+import * as helper from '../../Helpers';
 
 const ColorStrip = (props) => {
   const { item, index, onPressColorBox, colorListLength } = props;
@@ -15,7 +16,7 @@ const ColorStrip = (props) => {
     : item.values[0]?.color;
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', width: helper.DEVICE_WIDTH - 60 }}>
       <View
         style={[
           {
@@ -44,21 +45,23 @@ const ColorStrip = (props) => {
             />
           </View>
         </View>
-        <FlatList
-          style={styles.flatList}
-          data={[...item.values]}
-          horizontal
-          keyExtractor={(i) => i?.color.toString()}
-          renderItem={({ item: it, index: i }) => (
-            <ColorBox
-              it={it}
-              i={i}
-              item={item}
-              index={index}
-              onPressColorBox={onPressColorBox}
-            />
-          )}
-        />
+        <View style={styles.flstListWrapper}>
+          <FlatList
+            style={[styles.flatList]}
+            data={[...item.values]}
+            horizontal
+            keyExtractor={(i) => i?.color.toString()}
+            renderItem={({ item: it, index: i }) => (
+              <ColorBox
+                it={it}
+                i={i}
+                item={item}
+                index={index}
+                onPressColorBox={onPressColorBox}
+              />
+            )}
+          />
+        </View>
       </View>
     </View>
   );
@@ -72,6 +75,9 @@ const styles = StyleSheet.create({
   },
   flatList: {
     marginTop: 10,
+  },
+  flstListWrapper: {
+    width: helper.DEVICE_WIDTH - 60,
   },
   colorTitleValueContainer: {
     flexDirection: 'row',

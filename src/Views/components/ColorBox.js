@@ -4,12 +4,14 @@
 
 import React from 'react';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
+import * as helper from '../../Helpers';
 
 const ColorsBox = (props) => {
   const { i, index, item, it, onPressColorBox } = props;
+
   return (
     <Pressable
-      style={[styles.colorsStripContainer, {}]}
+      style={[styles.colorsStripContainer]}
       onPress={() => onPressColorBox(i, index, it)}>
       <View
         style={[
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
   colorsStripContainer: {
     marginStart: 5,
     alignItems: 'center',
+    width: (helper.DEVICE_WIDTH - 90) / 5,
   },
   input: {
     color: '#bbb',
@@ -47,19 +50,17 @@ const styles = StyleSheet.create({
   },
   selelctedBox: {
     borderWidth: 2,
-    padding: 3,
+    padding: 2,
     backgroundColor: '#0000',
     height: 35,
-    width: 65,
+    width: '100%',
     borderRadius: 5,
   },
   colorBox: {
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#aaa',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 28,
-    width: 58,
+    height: '100%',
+    width: '100%',
   },
 });

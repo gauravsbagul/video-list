@@ -17,7 +17,7 @@ const persistConfig = {
   timeout: 10000,
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['video'],
+  whitelist: ['video', 'colors'],
 };
 const args = __DEV__ ? [thunk, logger] : [thunk];
 
