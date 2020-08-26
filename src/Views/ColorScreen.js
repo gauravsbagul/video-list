@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -14,16 +16,14 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { getColors, setColors } from '../Redux/actions/colorStrip';
+import * as helper from '../Helpers';
+import { changeValue, getColors, setColors } from '../Redux/actions/colorStrip';
 import ColorStrip from './components/ColorStrip';
 import CustomAlert from './components/CustomAlert';
-import * as helper from '../Helpers';
 
 const ColorScreen = (props) => {
   const [colorList, setColorList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isVisibleColorModal, setIsVisibleColorModal] = useState(false);
-  const [error] = useState('');
   const [selectedColors, setSelectedColors] = useState([]);
 
   const onPressColorBox = (i, index, it) => {
@@ -42,9 +42,7 @@ const ColorScreen = (props) => {
           props.colors?.getAllColors?.response?.length
         ) {
           setColorList(props.colors?.getAllColors?.response);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
           Alert.alert('', 'Something went wrong!', [
             {
               text: 'Ok',
@@ -80,6 +78,12 @@ const ColorScreen = (props) => {
     }
   };
 
+  const onChangeColorValue = (value, index, prevValue) => {
+    if (value.length) {
+      props.changeValue(value, index, prevValue);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <CustomAlert
@@ -96,20 +100,24 @@ const ColorScreen = (props) => {
       </View>
       <Container style={styles.bodyContainer}>
         <Text style={styles.testStrip}>Test Strip</Text>
-
-        <FlatList
-          data={[...colorList]}
-          ListEmptyComponent={<ActivityIndicator />}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <ColorStrip
-              index={index}
-              item={item}
-              onPressColorBox={onPressColorBox}
-              colorListLength={colorList.length}
-            />
-          )}
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+          <FlatList
+            keyboardShouldPersistTaps="never"
+            data={[...colorList]}
+            ListEmptyComponent={<ActivityIndicator />}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => (
+              <ColorStrip
+                index={index}
+                item={item}
+                onPressColorBox={onPressColorBox}
+                colorListLength={colorList.length}
+                onChangeColorValue={onChangeColorValue}
+              />
+            )}
+          />
+        </KeyboardAvoidingView>
       </Container>
     </View>
   );
@@ -157,6 +165,7 @@ const mapStateToProps = ({ colors }) => {
 const mapDispatchToProps = {
   getColors,
   setColors,
+  changeValue,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ColorScreen);
