@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
-import ColorStrip from '../Views/ColorStrip';
+import ColorScreen from '../Views/ColorScreen';
 import MyFeed from '../Views/MyFeed';
 import Splash from '../Views/Auth/Splash';
 import Login from '../Views/Auth/Login';
@@ -27,7 +27,7 @@ const TabNav = (props) => {
           if (route.name === 'MyFeed') {
             iconName = focused ? 'heart' : 'heart-o';
             return <FontAwesome name={iconName} size={size} color={color} />;
-          } else if (route.name === 'ColorStrip') {
+          } else if (route.name === 'ColorScreen') {
             iconName = focused ? 'star' : 'star-o';
             return <FontAwesome name={iconName} size={size} color={color} />;
           }
@@ -38,7 +38,7 @@ const TabNav = (props) => {
         inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="MyFeed" component={MyFeed} />
-      <Tab.Screen name="ColorStrip" component={ColorStrip} />
+      <Tab.Screen name="ColorScreen" component={ColorScreen} />
     </Tab.Navigator>
   );
 };

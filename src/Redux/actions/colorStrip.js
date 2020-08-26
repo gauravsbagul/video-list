@@ -14,7 +14,6 @@ export const getColors = () => {
       };
 
       const response = await axios(body);
-      console.log('getColors -> response', response);
 
       dispatch({
         type: ACTION_TYPE.GET_COLORS,
@@ -35,15 +34,17 @@ export const setColors = (colorStripIndex, colorBoxIndex, colorValue) => {
       const { getAllColors } = getState().colors;
 
       getAllColors.response[colorStripIndex].inputBoxValue = colorValue.value;
+      getAllColors.response[
+        colorStripIndex
+      ].selectedColorBoxIndex = colorBoxIndex;
+
       const response = await getAllColors;
-      console.log('setColors -> response', response);
 
       dispatch({
         type: ACTION_TYPE.SET_COLORS,
         payload: { response: response.response, error: false },
       });
     } catch (error) {
-      console.log('setColors -> error', error);
       dispatch({
         type: ACTION_TYPE.SET_COLORS,
         payload: { response: 'Something went wrong!', error: true },
