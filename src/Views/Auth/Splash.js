@@ -8,8 +8,6 @@ import { isLoggedIn } from '../../Redux/actions/auth';
 import { connect } from 'react-redux';
 
 const Splash = (props) => {
-  const { navigation } = props;
-
   useEffect(() => {
     setTimeout(() => {
       props.isLoggedIn();
@@ -17,19 +15,25 @@ const Splash = (props) => {
   }, []);
 
   useEffect(() => {
-    if (navigation.isFocused()) {
+    console.log('Splash -> props', props);
+    console.log(
+      "Splash -> props.authentication.hasOwnProperty('isLogin')",
+      props.authentication.hasOwnProperty('isLogin'),
+    );
+    if (props.navigation.isFocused()) {
       if (props.authentication.hasOwnProperty('isLogin')) {
+        console.log('Splash -> props.authentication', props.authentication);
         if (
-          !props.authentication.isLogin?.error &&
+          props.authentication.isLogin?.error &&
           props.authentication.isLogin?.response === 'Logged Out'
         ) {
-          navigation.navigate('Login');
+          props.navigation.navigate('Login');
         } else {
-          navigation.replace('TabNav');
+          props.navigation.replace('TabNav');
         }
       }
     }
-  }, [props.authentication]);
+  }, [props]);
 
   return (
     <View style={styles.container}>

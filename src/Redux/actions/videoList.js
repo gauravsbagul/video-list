@@ -4,8 +4,10 @@ import { ACTION_TYPE } from './constants';
 const API = 'https://private-c31a5-task27.apiary-mock.com/videos';
 
 export const getVideos = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      const { getAllVideos } = getState().videos;
+      console.log('getVideos -> getAllVideos', getAllVideos);
       const body = {
         method: 'GET',
         url: API,

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 export default EmptyData = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Looks like no data available</Text>
+      <Text style={styles.text}>Fetching Latatest data...</Text>
     </View>
   );
 };

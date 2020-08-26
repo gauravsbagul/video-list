@@ -1,7 +1,9 @@
 import { Dimensions, Platform } from 'react-native';
 
 export const DEVICE_WIDTH = Dimensions.get('window').width;
+console.log('DEVICE_WIDTH', DEVICE_WIDTH);
 export const DEVICE_HEIGHT = Dimensions.get('window').height;
+console.log('DEVICE_HEIGHT', DEVICE_HEIGHT);
 
 export const wrapTheSentence = (sentence = '', limit = 3) => {
   return sentence?.split(' ')?.length > limit
@@ -18,22 +20,23 @@ export const isIos = (ios, android) => {
 };
 
 export const isIphoneX = () => {
-  const dim = Dimensions.get('window');
-
+  console.log('isIphoneX -> isIphoneX');
   return (
     // This has to be iOS
     Platform.OS === 'ios' &&
     // Check either, iPhone X or XR
-    (isIPhoneXSize(dim) || isIPhoneXrSize(dim))
+    (isIPhoneXSize() || isIPhoneXrSize())
   );
 };
 
-export const isIPhoneXSize = (dim) => {
-  return dim.height == 812 || dim.width == 812;
+export const isIPhoneXSize = () => {
+  console.log('isIPhoneXSize -> DEVICE_HEIGHT', DEVICE_HEIGHT);
+  console.log('isIPhoneXSize -> DEVICE_WIDTH', DEVICE_WIDTH);
+  return DEVICE_HEIGHT == 812 || DEVICE_WIDTH == 812;
 };
 
-export const isIPhoneXrSize = (dim) => {
-  return dim.height == 896 || dim.width == 896;
+export const isIPhoneXrSize = () => {
+  return DEVICE_HEIGHT == 896 || DEVICE_WIDTH == 896;
 };
 
 // const HEADER_SIZE = isIphoneX() ? 130 : 100;

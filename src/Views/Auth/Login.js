@@ -6,9 +6,12 @@ import {
   Alert,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { login } from '../../Redux/actions/auth';
+import lights from '../../assets/lights.jpg';
+
 const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 
 class Login extends Component {
@@ -79,56 +82,60 @@ class Login extends Component {
     const { showLoader, hidePassword } = this.state;
     return (
       <>
-        <Container>
-          <View style={styles.container}>
-            <>
-              <View style={styles.inputWrapper}>
-                <InputGroup style={styles.inputGroup}>
-                  <Input
-                    placeholder="Email ID"
-                    onChangeText={(email) => this.setState({ email })}
-                    value={this.state.email}
-                    keyboardType="email-address"
-                    returnKeyType="done"
-                  />
-                </InputGroup>
-              </View>
+        <ImageBackground style={styles.container} source={lights}>
+          <>
+            <View style={styles.inputWrapper}>
+              <InputGroup style={styles.inputGroup}>
+                <Input
+                  placeholder="Email ID"
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email}
+                  keyboardType="email-address"
+                  returnKeyType="done"
+                  placeholderTextColor="#ffff"
+                  style={styles.inputText}
+                />
+              </InputGroup>
+            </View>
 
-              <View style={styles.inputWrapper}>
-                <InputGroup style={styles.inputGroup}>
-                  <Input
-                    placeholder="Password"
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.password}
-                    keyboardType="default"
-                    returnKeyType="go"
-                    onSubmitEditing={() => this.handleLogin()}
-                    secureTextEntry={hidePassword}
-                  />
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setState({ hidePassword: !this.state.hidePassword })
-                    }>
-                    <Text uppercase style={{ marginRight: 10 }}>
-                      {hidePassword ? 'Show' : 'Hide'}
-                    </Text>
-                  </TouchableOpacity>
-                </InputGroup>
-              </View>
+            <View style={styles.inputWrapper}>
+              <InputGroup style={styles.inputGroup}>
+                <Input
+                  placeholder="Password"
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password}
+                  keyboardType="default"
+                  returnKeyType="go"
+                  onSubmitEditing={() => this.handleLogin()}
+                  secureTextEntry={hidePassword}
+                  placeholderTextColor="#ffff"
+                  style={styles.inputText}
+                />
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      hidePassword: !this.state.hidePassword,
+                    })
+                  }>
+                  <Text uppercase style={{ marginRight: 10, color: '#ffff' }}>
+                    {hidePassword ? 'Show' : 'Hide'}
+                  </Text>
+                </TouchableOpacity>
+              </InputGroup>
+            </View>
 
-              <Button
-                rounded
-                style={styles.button}
-                onPress={() => this.handleLogin()}>
-                {showLoader ? (
-                  <ActivityIndicator size="large" color="#FFFFFF" animating />
-                ) : (
-                  <Text>{'Login'}</Text>
-                )}
-              </Button>
-            </>
-          </View>
-        </Container>
+            <Button
+              rounded
+              style={styles.button}
+              onPress={() => this.handleLogin()}>
+              {showLoader ? (
+                <ActivityIndicator size="large" color="#FFFFFF" animating />
+              ) : (
+                <Text>{'Login'}</Text>
+              )}
+            </Button>
+          </>
+        </ImageBackground>
       </>
     );
   }
@@ -146,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#ddd',
   },
   tabWrapper: {
     backgroundColor: '#0000',
@@ -154,11 +160,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   inputGroup: {
-    backgroundColor: '#F2F2F2',
     borderRadius: 10,
   },
   inputWrapper: {
     marginVertical: 5,
+  },
+  inputText: {
+    color: '#ffff',
   },
   button: {
     width: '100%',

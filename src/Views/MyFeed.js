@@ -23,7 +23,7 @@ import EmptyData from './components/EmptyData';
 const MyFeed = (props) => {
   const { navigation, getVideos, videos } = props;
   const [videoList, setVideoList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [avatar, setAvatar] = useState(
     'https://randomuser.me/api/portraits/lego/5.jpg',
@@ -44,6 +44,7 @@ const MyFeed = (props) => {
 
   useEffect(() => {
     if (
+      props.navigation.isFocused() &&
       !videos?.getAllVideos?.error &&
       videos?.getAllVideos?.response?.videos
     ) {
@@ -56,6 +57,18 @@ const MyFeed = (props) => {
         setVideoList(videosArray);
       } else {
         setVideoList(videos?.getAllVideos?.response?.videos);
+      }
+    } else {
+      if (videos?.getAllVideos?.error && videos?.getAllVideos?.response) {
+        setIsLoading(false);
+        Alert.alert('', ' Something went wrong!', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              getVideosFromAPI();
+            },
+          },
+        ]);
       }
     }
   }, [videos]);
@@ -172,30 +185,26 @@ const MyFeed = (props) => {
     <>
       <Header avatar={avatar} selectAvatar={selectAvatar} />
       <View style={styles.container}>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={() => onRefresh()}
-              />
-            }
-            data={[...videoList]}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item, index }) => (
-              <VideoCard
-                item={item}
-                index={index}
-                shareImageUrl={shareImageUrl}
-              />
-            )}
-            ListFooterComponent={<View style={{ height: 150 }} />}
-            onEndReached={() => getVideosFromAPI()}
-            ListEmptyComponent={<EmptyData />}
-          />
-        )}
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => onRefresh()}
+            />
+          }
+          data={[...videoList]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <VideoCard
+              item={item}
+              index={index}
+              shareImageUrl={shareImageUrl}
+            />
+          )}
+          ListFooterComponent={<View style={{ height: 150 }} />}
+          onEndReached={() => getVideosFromAPI()}
+          ListEmptyComponent={<ActivityIndicator />}
+        />
       </View>
     </>
   );
