@@ -18,7 +18,6 @@ target 'videos_list' do
 
   pod 'RNShare', :path => '../node_modules/react-native-share'
 
-  pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
   target 'videos_listTests' do
     inherit! :complete
