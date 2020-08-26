@@ -4,7 +4,6 @@ import { ACTION_TYPE } from '../../actions/constants';
 const initialState = {};
 
 export default (state = initialState, action) => {
-  const newState = { ...state };
   switch (action.type) {
     case ACTION_TYPE.LOGIN:
       return {
@@ -15,7 +14,7 @@ export default (state = initialState, action) => {
     case ACTION_TYPE.IS_LOGIN:
       return {
         ...state,
-        login: action.payload,
+        isLogin: action.payload,
         userLoggedOut: action.payload.error,
       };
     case ACTION_TYPE.LOGOUT:

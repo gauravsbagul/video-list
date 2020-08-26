@@ -29,7 +29,6 @@ const TabNav = (props) => {
             return <FontAwesome name={iconName} size={size} color={'red'} />;
           } else if (route.name === 'ColorStrip') {
             iconName = focused ? 'star' : 'star-o';
-            console.log('TCL:: TabNav -> iconName', iconName);
             return <FontAwesome name={iconName} size={size} color={color} />;
           }
         },
@@ -46,9 +45,7 @@ const TabNav = (props) => {
 
 const AuthStack = createStackNavigator();
 
-const StackNav = (props) => {
-  const isLoggedIn = props.authentication?.userLoggedOut;
-
+const StackNav = () => {
   return (
     <NavigationContainer>
       <AuthStack.Navigator
@@ -56,11 +53,10 @@ const StackNav = (props) => {
           ...screenOptions,
         }}>
         <AuthStack.Screen name="Splash" component={Splash} />
-        {isLoggedIn ? (
-          <AuthStack.Screen name="Login" component={Login} />
-        ) : (
-          <AuthStack.Screen name="TabNav" component={TabNav} />
-        )}
+
+        <AuthStack.Screen name="Login" component={Login} />
+
+        <AuthStack.Screen name="TabNav" component={TabNav} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );
