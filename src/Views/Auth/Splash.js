@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // In App.js in a new project
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { isLoggedIn } from '../../Redux/actions/auth';
@@ -12,14 +13,21 @@ const Splash = (props) => {
   useEffect(() => {
     setTimeout(() => {
       props.isLoggedIn();
-    }, 2000);
+    }, 3000);
   }, []);
 
   useEffect(() => {
-    if (!props.authentication?.userLoggedOut) {
-      navigation.replace('TabNav');
-    } else {
-      navigation.navigate('Login');
+    if (navigation.isFocused()) {
+      if (props.authentication.hasOwnProperty('isLogin')) {
+        if (
+          !props.authentication.isLogin?.error &&
+          props.authentication.isLogin?.response === 'Logged Out'
+        ) {
+          navigation.navigate('Login');
+        } else {
+          navigation.replace('TabNav');
+        }
+      }
     }
   }, [props.authentication]);
 

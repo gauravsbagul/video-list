@@ -44,7 +44,7 @@ export const isLoggedIn = () => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      const response = await AsyncStorage.removeItem('loginDetails');
+      await AsyncStorage.removeItem('loginDetails');
 
       dispatch({
         type: ACTION_TYPE.LOGOUT,
