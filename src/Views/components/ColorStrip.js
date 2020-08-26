@@ -8,37 +8,58 @@ import { FlatList } from 'react-native-gesture-handler';
 import ColorBox from './ColorBox';
 
 const ColorStrip = (props) => {
-  const { item, index, onPressColorBox } = props;
+  const { item, index, onPressColorBox, colorListLength } = props;
+
+  let leftStripColor = item.selectedColorBoxIndex
+    ? item.values[item.selectedColorBoxIndex]?.color
+    : item.values[0]?.color;
 
   return (
-    <View style={styles.flatList}>
-      <View style={styles.colorTitleValueContainer}>
-        <Text style={styles.colorStripTitle}>
-          {item.name} <Text style={styles.unit}>{`(${item.unit})`}</Text>
-        </Text>
-        <View>
-          <Input
-            style={[styles.input, { color: item.inputBoxValue && '#008B8B' }]}
-            value={item.inputBoxValue || '0'}
-            keyboardType={'number-pad'}
-          />
-        </View>
+    <View style={{ flexDirection: 'row' }}>
+      <View
+        style={[
+          {
+            borderTopWidth: index == 0 && 1,
+            borderBottomWidth: index == colorListLength - 1 && 1,
+          },
+          styles.leftColorStripWrapper,
+        ]}>
+        <View
+          style={[
+            styles.leftSideSelectedColor,
+            { backgroundColor: leftStripColor },
+          ]}
+        />
       </View>
-      <FlatList
-        style={styles.flatList}
-        data={[...item.values]}
-        horizontal
-        keyExtractor={(i) => i.color.toString()}
-        renderItem={({ item: it, index: i }) => (
-          <ColorBox
-            it={it}
-            i={i}
-            item={item}
-            index={index}
-            onPressColorBox={onPressColorBox}
-          />
-        )}
-      />
+      <View style={[styles.flatList]}>
+        <View style={styles.colorTitleValueContainer}>
+          <Text style={[styles.colorStripTitle, { marginLeft: 10 }]}>
+            {item.name} <Text style={styles.unit}>{`(${item.unit})`}</Text>
+          </Text>
+          <View>
+            <Input
+              style={[styles.input, { color: item.inputBoxValue && '#008B8B' }]}
+              value={item.inputBoxValue || '0'}
+              keyboardType={'number-pad'}
+            />
+          </View>
+        </View>
+        <FlatList
+          style={styles.flatList}
+          data={[...item.values]}
+          horizontal
+          keyExtractor={(i) => i?.color.toString()}
+          renderItem={({ item: it, index: i }) => (
+            <ColorBox
+              it={it}
+              i={i}
+              item={item}
+              index={index}
+              onPressColorBox={onPressColorBox}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -56,6 +77,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  leftColorStripWrapper: {
+    backgroundColor: '#fff',
+    width: 30,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#aaa',
+    justifyContent: 'flex-end',
+  },
+  leftSideSelectedColor: {
+    height: 28,
+    marginBottom: 20,
+  },
   unit: {
     color: '#bbb',
     fontSize: 15,
@@ -70,8 +103,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#aaa',
-    width: 50,
-    height: 30,
+    width: 60,
+    height: 35,
+    marginRight: 10,
   },
   valueBox: {
     borderRadius: 5,

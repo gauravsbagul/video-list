@@ -2,18 +2,18 @@
 /* eslint-disable eqeqeq */
 // In App.js in a new project
 
-import React, { useState, useEffect } from 'react';
+import { Container } from 'native-base';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
   ActivityIndicator,
   Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { Container, Input } from 'native-base';
 import { FlatList } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import { getColors, setColors } from '../Redux/actions/colorStrip';
 import ColorStrip from './components/ColorStrip';
 import CustomAlert from './components/CustomAlert';
@@ -44,7 +44,7 @@ const ColorScreen = (props) => {
           setIsLoading(false);
         } else {
           setIsLoading(false);
-          Alert.alert('', ' Something went wrong!', [
+          Alert.alert('', 'Something went wrong!', [
             {
               text: 'Ok',
               onPress: () => {
@@ -67,9 +67,16 @@ const ColorScreen = (props) => {
     let selectedColorsFiltred = colorList.filter((color) => {
       return color.hasOwnProperty('selectedColorBoxIndex');
     });
-    setSelectedColors([...selectedColorsFiltred]);
-    console.log('showSelectedColorsDetails -> selectedColors', selectedColors);
-    setIsVisibleColorModal(true);
+    if (selectedColorsFiltred.length) {
+      setSelectedColors([...selectedColorsFiltred]);
+      setIsVisibleColorModal(true);
+    } else {
+      Alert.alert('', 'Please Select the color first', [
+        {
+          text: 'Ok',
+        },
+      ]);
+    }
   };
 
   return (
@@ -99,6 +106,7 @@ const ColorScreen = (props) => {
                 index={index}
                 item={item}
                 onPressColorBox={onPressColorBox}
+                colorListLength={colorList.length}
               />
             )}
           />
