@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#bbb',
-    fontSize: 15,
+    fontSize: 12,
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#aaa',
-    width: 60,
-    height: 35,
+    width: 65,
+    height: 40,
     marginRight: 10,
   },
   valueBox: {
