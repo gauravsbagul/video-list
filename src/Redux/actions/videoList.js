@@ -7,7 +7,6 @@ export const getVideos = () => {
   return async (dispatch, getState) => {
     try {
       const { getAllVideos } = getState().videos;
-      console.log('getVideos -> getAllVideos', getAllVideos);
       const body = {
         method: 'GET',
         url: API,

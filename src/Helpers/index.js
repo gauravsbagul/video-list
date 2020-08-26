@@ -1,9 +1,7 @@
 import { Dimensions, Platform } from 'react-native';
 
 export const DEVICE_WIDTH = Dimensions.get('window').width;
-console.log('DEVICE_WIDTH', DEVICE_WIDTH);
 export const DEVICE_HEIGHT = Dimensions.get('window').height;
-console.log('DEVICE_HEIGHT', DEVICE_HEIGHT);
 
 export const wrapTheSentence = (sentence = '', limit = 3) => {
   return sentence?.split(' ')?.length > limit
@@ -20,7 +18,6 @@ export const isIos = (ios, android) => {
 };
 
 export const isIphoneX = () => {
-  console.log('isIphoneX -> isIphoneX');
   return (
     // This has to be iOS
     Platform.OS === 'ios' &&
@@ -30,8 +27,6 @@ export const isIphoneX = () => {
 };
 
 export const isIPhoneXSize = () => {
-  console.log('isIPhoneXSize -> DEVICE_HEIGHT', DEVICE_HEIGHT);
-  console.log('isIPhoneXSize -> DEVICE_WIDTH', DEVICE_WIDTH);
   return DEVICE_HEIGHT == 812 || DEVICE_WIDTH == 812;
 };
 

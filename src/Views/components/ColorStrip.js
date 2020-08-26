@@ -2,14 +2,39 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable eqeqeq */
 import { Input } from 'native-base';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ColorBox from './ColorBox';
 import * as helper from '../../Helpers';
+import ColorBox from './ColorBox';
 
 const ColorStrip = (props) => {
-  const { item, index, onPressColorBox, colorListLength } = props;
+  const [inpurValue, setInpurValue] = useState('');
+  const {
+    item,
+    index,
+    onPressColorBox,
+    colorListLength,
+    onChangeColorValue,
+  } = props;
+
+  useEffect(() => {
+    setInpurValue(item.inputBoxValue);
+  }, [item.inputBoxValue]);
+
+  const handleValueChange = (newValue) => {
+    if (item.inputBoxValue !== undefined) {
+      setInpurValue(newValue);
+      onChangeColorValue(newValue, index, item.inputBoxValue);
+    } else {
+      setInpurValue('');
+      Alert.alert('', 'Please Select the color first', [
+        {
+          text: 'Ok',
+        },
+      ]);
+    }
+  };
 
   let leftStripColor = item.selectedColorBoxIndex
     ? item.values[item.selectedColorBoxIndex]?.color
@@ -20,8 +45,8 @@ const ColorStrip = (props) => {
       <View
         style={[
           {
-            borderTopWidth: index == 0 && 1,
-            borderBottomWidth: index == colorListLength - 1 && 1,
+            borderTopWidth: index == 0 ? 1 : 0,
+            borderBottomWidth: index == colorListLength - 1 ? 1 : 0,
           },
           styles.leftColorStripWrapper,
         ]}>
@@ -39,9 +64,13 @@ const ColorStrip = (props) => {
           </Text>
           <View>
             <Input
-              style={[styles.input, { color: item.inputBoxValue && '#008B8B' }]}
-              value={item.inputBoxValue || '0'}
+              style={[
+                styles.input,
+                { color: item.inputBoxValue ? '#008B8B' : '#000' },
+              ]}
+              value={inpurValue}
               keyboardType={'number-pad'}
+              onChangeText={(newValue) => handleValueChange(newValue)}
             />
           </View>
         </View>
@@ -101,7 +130,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#bbb',
-    fontSize: 15,
+    fontSize: 12,
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -109,8 +138,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#aaa',
-    width: 60,
-    height: 35,
+    width: 65,
+    height: 40,
     marginRight: 10,
   },
   valueBox: {
