@@ -9,4 +9,4 @@ React Native application that renders list of videos with description and color 
   5: npm run android <br/>
   6: Insert valid email address <br/>
   7: Any password will work <br/>
-  8: Hit login and know the drill 😎 <br/>
+  8: Hit login and you know the drill 😎 <br/>
